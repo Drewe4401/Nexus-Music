@@ -7,6 +7,7 @@ import (
 	"nexus-music/handlers"
 	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -36,6 +37,15 @@ func main() {
 	// Set up Gin router
 	r := gin.Default()
 
+	// Add CORS middleware
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"}, // Adjust this to match your frontend's origin
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
+
 	// Public routes
 	r.POST("/login", handlers.Login)
 	r.POST("/create-account", handlers.CreateAccount)
@@ -46,13 +56,13 @@ func main() {
 	admin.POST("/login", handlers.AdminLogin)
 	admin.Use(handlers.AuthenticateAdmin())
 	{
-		admin.GET("/users", handlers.GetAllUsers)     // Example admin functionality
-		admin.GET("/streams", handlers.GetAllStreams) // Example admin functionality
+		admin.GET("/users", handlers.GetAllUsers)
+		admin.GET("/streams", handlers.GetAllStreams)
 	}
 
 	// Start the server
 	log.Printf("Starting server on port %s...", appPort)
-	r.Run(":" + appPort) // Listen and serve on the configured port
+	r.Run(":" + appPort)
 }
 
 // getEnv retrieves the value of the environment variable or returns a default value if it's not set

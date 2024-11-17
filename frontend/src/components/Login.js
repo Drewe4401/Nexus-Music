@@ -1,13 +1,42 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../layout/Login.css";
+import { adminLogin } from "../services/api"; // API service for backend requests
 
-// Import the SVG assets as strings for manipulation
+// Import SVG assets for animation
 import note1 from "../assets/note1.svg";
 import note2 from "../assets/note2.svg";
 
 const Login = () => {
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
+  // Redirect to the home page if the admin is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      navigate("/home");
+    }
+  }, [navigate]);
+
+  // Handle login form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Clear previous errors
+
+    try {
+      const response = await adminLogin(username, password); // Call admin login API
+      localStorage.setItem("adminToken", response.data.token); // Store token in localStorage
+      navigate("/home"); // Redirect to home page
+    } catch (err) {
+      setError("Invalid username or password. Please try again.");
+    }
+  };
+
+  // Canvas animation logic remains the same as before
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -15,16 +44,14 @@ const Login = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const notes = []; // Array to store note objects
-    const svgPaths = [note1, note2]; // SVG file paths
-    const colors = ["#ff512f", "#23a2f6", "#f09819", "#1845ad", "#7C78B8"]; // Available colors
+    const notes = [];
+    const svgPaths = [note1, note2];
+    const colors = ["#ff512f", "#23a2f6", "#f09819", "#1845ad", "#7C78B8"];
 
-    // Function to create random values
     function random(min, max) {
       return Math.random() * (max - min) + min;
     }
 
-    // Function to create a colored SVG image
     async function createColoredImage(svgPath, color) {
       const svg = await fetch(svgPath).then((res) => res.text());
       const coloredSvg = svg.replace(/fill="#?[0-9a-fA-F]{3,6}"/g, `fill="${color}"`);
@@ -36,13 +63,12 @@ const Login = () => {
       img.src = url;
       return new Promise((resolve) => {
         img.onload = () => {
-          URL.revokeObjectURL(url); // Cleanup blob
+          URL.revokeObjectURL(url);
           resolve(img);
         };
       });
     }
 
-    // Create a note object
     async function createNote(x, y, svgPath) {
       const color = colors[Math.floor(Math.random() * colors.length)];
       const img = await createColoredImage(svgPath, color);
@@ -52,35 +78,32 @@ const Login = () => {
         y,
         dx: random(-2, 2),
         dy: random(-2, 2),
-        scale: random(1.5, 3), // Scale down the image by a factor of 8
-        angle: random(0, Math.PI * 2), // Random rotation
-        angularSpeed: random(0.01, 0.05), // Speed of rotation
+        scale: random(1.5, 3),
+        angle: random(0, Math.PI * 2),
+        angularSpeed: random(0.01, 0.05),
         img,
       };
     }
 
-    // Draw the note on the canvas
     function drawNote(note) {
-      const width = note.img.width / 8; // Adjust width
-      const height = note.img.height / 8; // Adjust height
+      const width = note.img.width / 8;
+      const height = note.img.height / 8;
 
       ctx.save();
       ctx.translate(note.x, note.y);
       ctx.rotate(note.angle);
       ctx.scale(note.scale, note.scale);
-      ctx.globalAlpha = 0.8; // Add transparency
+      ctx.globalAlpha = 0.8;
 
       ctx.drawImage(note.img, -width / 2, -height / 2, width, height);
       ctx.restore();
     }
 
-    // Update the note's position and rotation
     function updateNote(note) {
       note.x += note.dx;
       note.y += note.dy;
       note.angle += note.angularSpeed;
 
-      // Bounce off walls
       if (note.x + (note.img.width / 8) * note.scale > canvas.width || note.x - (note.img.width / 8) * note.scale < 0) {
         note.dx = -note.dx;
       }
@@ -89,7 +112,6 @@ const Login = () => {
       }
     }
 
-    // Add random notes to the array
     async function addNotes() {
       for (let i = 0; i < 10; i++) {
         const note = await createNote(
@@ -101,7 +123,6 @@ const Login = () => {
       }
     }
 
-    // Animate the notes
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -115,7 +136,6 @@ const Login = () => {
 
     addNotes().then(() => animate());
 
-    // Handle window resize
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -130,14 +150,30 @@ const Login = () => {
   return (
     <>
       <canvas ref={canvasRef} className="background"></canvas>
-      <form>
-        <h3>Login Here</h3>
+      <form onSubmit={handleSubmit}>
+        <h3>Admin Login</h3>
+
+        {error && <p className="error-message">{error}</p>}
 
         <label htmlFor="username">Username</label>
-        <input type="text" placeholder="Admin Username" id="username" required />
+        <input
+          type="text"
+          placeholder="Admin Username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
         <label htmlFor="password">Password</label>
-        <input type="password" placeholder="Password" id="password" required />
+        <input
+          type="password"
+          placeholder="Password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
         <button type="submit">Log In</button>
       </form>
