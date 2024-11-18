@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+:root {
+  --app-bg: #101827;
+  --sidebar: rgba(21, 30, 47, 1);
+  --sidebar-main-color: #fff;
+  --sidebar-link: #fff;
+  --sidebar-active-link: #1d283c;
+  --sidebar-hover-link: #1a2539;
+  --action-color: #2869ff;
+}
+
+.sidebar {
+  flex-basis: 200px;
+  max-width: 200px;
+  flex-shrink: 0;
+  background-color: var(--sidebar);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar-header {
+  padding: 24px;
+  text-align: center;
+  color: var(--sidebar-main-color);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.sidebar-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-list-item {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.sidebar-list-item a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--sidebar-link);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .sidebar-list-item a:hover {
+    background-color: var(--sidebar-hover-link);
+  }
+
+  .sidebar-list-item a.active {
+    background-color: var(--sidebar-active-link);
+    color: var(--action-color);
+  }
+
+.sidebar-list-item.active::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  background-color: var(--action-color);
+  height: 100%;
+  width: 4px;
+}
+  

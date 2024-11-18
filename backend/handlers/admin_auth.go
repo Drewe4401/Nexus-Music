@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"nexus-music/db"
-	"nexus-music/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -63,12 +62,23 @@ func AdminLogin(c *gin.Context) {
 
 func AuthenticateAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString := c.GetHeader("Authorization")
-		if tokenString == "" {
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization token required"})
 			c.Abort()
 			return
 		}
+
+		// Ensure the token is prefixed with "Bearer "
+		const bearerPrefix = "Bearer "
+		if len(authHeader) <= len(bearerPrefix) || authHeader[:len(bearerPrefix)] != bearerPrefix {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token format"})
+			c.Abort()
+			return
+		}
+
+		// Extract the token string
+		tokenString := authHeader[len(bearerPrefix):]
 
 		// Parse and validate the token
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -99,26 +109,4 @@ func AuthenticateAdmin() gin.HandlerFunc {
 		c.Set("adminID", int(adminID))
 		c.Next()
 	}
-}
-
-// GetAllStreams retrieves all streams from the database
-func GetAllStreams(c *gin.Context) {
-	var streams []models.Stream
-	query := `
-		SELECT 
-			st.id, st.user_id, st.song_id, st.streamed_at, st.duration_seconds,
-			u.username AS user_username, 
-			s.title AS song_title 
-		FROM streams st
-		JOIN users u ON st.user_id = u.id
-		JOIN songs s ON st.song_id = s.id
-		ORDER BY st.streamed_at DESC
-	`
-	err := db.DB.Select(&streams, query)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve streams"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"streams": streams})
 }

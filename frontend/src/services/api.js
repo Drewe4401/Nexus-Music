@@ -22,14 +22,29 @@ export const adminLogin = (username, password) => {
   return api.post("/admin/login", { username, password });
 };
 
-// Example for fetching users
+// Fetch all users
 export const fetchUsers = () => {
   return api.get("/admin/users");
 };
 
-// Example for fetching streams
+// Fetch all streams
 export const fetchStreams = () => {
   return api.get("/admin/streams");
+};
+
+// Create a new user
+export const createUser = (username, password) => {
+  return api.post("/admin/users", { username, password });
+};
+
+// Update a user's password
+export const updateUserPassword = (userId, password) => {
+  return api.post("/admin/users/update-password", { user_id: userId, password });
+};
+
+// Delete a user
+export const deleteUser = (userId) => {
+  return api.delete(`/admin/users/${userId}`);
 };
 
 export default api;

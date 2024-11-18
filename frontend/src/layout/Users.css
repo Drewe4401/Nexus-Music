@@ -1,0 +1,192 @@
+/* Main layout container */
+.main-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+    background-color: var(--app-bg);
+    color: white;
+  }
+  
+  /* Sidebar: as is, no changes needed */
+  .sidebar {
+    flex-basis: 200px; /* Sidebar width */
+    max-width: 200px;
+    flex-shrink: 0;
+    background-color: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Content area */
+  .main-content {
+    flex: 1; /* Take remaining width */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    padding: 40px; /* Spacing around the content */
+    background-color: var(--app-bg);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .main-content h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .main-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  
+  .table-container {
+    margin-top: 20px;
+    background-color: #1a202e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  table th,
+  table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #2d3748;
+  }
+  
+  table th {
+    background-color: #1e293b;
+    color: #a0aec0;
+  }
+  
+  table tr:hover {
+    background-color: #2d3748;
+  }
+  
+  form {
+    margin-top: 30px;
+    background-color: #1a202e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  form h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #2d3748;
+    border: 1px solid #4a5568;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #2869ff;
+    background-color: #1e293b;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #2869ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #6291fd;
+  }
+  
+  button:disabled {
+    background-color: #4a5568;
+    cursor: not-allowed;
+  }
+  
+  .header-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .create-button {
+    background-color: #28a745; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .create-button:hover {
+    background-color: #218838;
+  }
+  
+  .create-form {
+    margin-top: 30px;
+    background-color: #1a202e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Close button for Create User form */
+.create-form-container {
+  position: relative;
+  margin-top: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: -25px;
+  right: 15px;
+  background-color: #ff4d4f; /* Red button */
+  opacity: 50%;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: #d9363e;
+}
+
+/* Notification styling */
+.notification {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+  

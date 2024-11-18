@@ -58,6 +58,10 @@ func main() {
 	{
 		admin.GET("/users", handlers.GetAllUsers)
 		admin.GET("/streams", handlers.GetAllStreams)
+		admin.POST("/users/update-password", handlers.UpdateUserPassword)
+		admin.DELETE("/users/:id", handlers.DeleteUser)
+		admin.POST("/users", handlers.CreateUser)
+
 	}
 
 	// Start the server

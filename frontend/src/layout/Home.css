@@ -1,0 +1,44 @@
+/* Home.css */
+
+.home-container {
+    display: flex;
+    height: 100vh;
+    background-color: #101827; /* Matches the sidebar background */
+    color: white;
+  }
+  
+  .home-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    text-align: left;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .home-content h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .home-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .logout-button {
+    padding: 10px 20px;
+    background-color: #2869ff; /* Matches the action button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #6291fd;
+  }
+  
