@@ -103,6 +103,32 @@ func ensureDefaultAdmin() {
 	}
 }
 
+// func teststreams() {
+// // Insert a test song
+// 	testSongQuery := `
+// 		INSERT INTO songs (title, artist, album, file_path)
+// 		VALUES ('Test Song', 'Test Artist', 'Test Album', '/fake/path/to/song.mp3')
+// 		RETURNING id;
+// 	`
+// 	var testSongID int
+// 	err := DB.QueryRow(testSongQuery).Scan(&testSongID)
+// 	if err != nil {
+// 		log.Fatalf("❌ Failed to insert test song: %v", err)
+// 	}
+// 	log.Printf("✅ Test song inserted with ID: %d", testSongID)
+
+// 	// Insert a test stream using user_id 7 and the test song's ID
+// 	testStreamQuery := `
+// 		INSERT INTO streams (user_id, song_id, duration_seconds)
+// 		VALUES ($1, $2, $3);
+// 	`
+// 	_, err = DB.Exec(testStreamQuery, 7, testSongID, 240) // Duration is 240 seconds (4 minutes)
+// 	if err != nil {
+// 		log.Fatalf("❌ Failed to insert test stream: %v", err)
+// 	}
+// 	log.Println("✅ Test stream inserted for user_id 7 and the test song")
+// }
+
 // getEnv retrieves the value of an environment variable or returns a default value
 func getEnv(key, defaultValue string) string {
 	if value, exists := os.LookupEnv(key); exists {

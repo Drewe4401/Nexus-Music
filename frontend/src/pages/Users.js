@@ -63,7 +63,7 @@ const Users = () => {
       <Sidebar />
       <div className="main-content">
         <h1>Users Page</h1>
-        <p>Manage all administrators here.</p>
+        <p>Manage all app users here.</p>
 
         {/* Notification */}
         {notification && <div className="notification">{notification}</div>}
@@ -114,7 +114,7 @@ const Users = () => {
       <tr>
         <th>ID</th>
         <th>Username</th>
-        <th>Actions</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -123,7 +123,7 @@ const Users = () => {
           <tr key={user.ID}>
             <td>{user.ID}</td>
             <td>{user.Username}</td>
-            <td>
+            <td className="table_button">
               <button
                 onClick={() => setSelectedUser({ id: user.ID, username: user.Username, newPassword: "" })}
               >

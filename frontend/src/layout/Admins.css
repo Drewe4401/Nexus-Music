@@ -1,0 +1,52 @@
+.main-container {
+    display: flex;
+    height: 100vh;
+    background-color: var(--app-bg);
+    color: white;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+    background-color: #1a202e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+  }
+  
+  table th,
+  table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #2d3748;
+  }
+  
+  .table-container button {
+    margin-right: 10px;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  

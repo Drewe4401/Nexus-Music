@@ -58,10 +58,14 @@ func main() {
 	{
 		admin.GET("/users", handlers.GetAllUsers)
 		admin.GET("/streams", handlers.GetAllStreams)
+		admin.GET("/music", handlers.GetAllMusic)
+		admin.GET("/admins", handlers.GetAllAdmins)
+		admin.POST("/admins/create-admin", handlers.CreateAdmin)            // Route to create an admin
+		admin.POST("/admins/update-password", handlers.UpdateAdminPassword) // Route to update admin password
+		admin.DELETE("/admins/:id", handlers.DeleteAdmin)                   // Route to delete an admin
 		admin.POST("/users/update-password", handlers.UpdateUserPassword)
 		admin.DELETE("/users/:id", handlers.DeleteUser)
 		admin.POST("/users", handlers.CreateUser)
-
 	}
 
 	// Start the server

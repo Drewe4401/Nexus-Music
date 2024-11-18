@@ -32,6 +32,12 @@ export const fetchStreams = () => {
   return api.get("/admin/streams");
 };
 
+// Fetch all music
+export const fetchMusic = () => {
+  return api.get("/admin/music");
+};
+
+
 // Create a new user
 export const createUser = (username, password) => {
   return api.post("/admin/users", { username, password });
@@ -46,5 +52,26 @@ export const updateUserPassword = (userId, password) => {
 export const deleteUser = (userId) => {
   return api.delete(`/admin/users/${userId}`);
 };
+
+// Fetch all admins
+export const fetchAdmins = () => {
+  return api.get("/admin/admins");
+};
+
+// Create a new admin
+export const createAdmin = (username, password) => {
+  return api.post("/admin/admins/create-admin", { username, password });
+};
+
+// Update an admin's password
+export const updateAdminPassword = (adminId, password) => {
+  return api.post("/admin/admins/update-password", { admin_id: adminId, password });
+};
+
+// Delete an admin
+export const deleteAdmin = (adminId) => {
+  return api.delete(`/admin/admins/${adminId}`);
+};
+
 
 export default api;
